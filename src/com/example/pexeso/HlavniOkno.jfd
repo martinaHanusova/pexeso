@@ -1,0 +1,90 @@
+JFDML JFormDesigner: "6.0.2.0.116" Java: "1.8.0_112-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			"defaultCloseOperation": 2
+			"title": "Pexeso"
+			"$locationPolicy": 1
+			"background": new java.awt.Color( 204, 204, 204, 255 )
+			"$sizePolicy": 1
+			auxiliary() {
+				"JavaCodeGenerator.postInitCode": "this.contentPane = (JPanel) this.getContentPane();\nthis.contentPane.setBackground(this.getBackground());"
+			}
+			addEvent( new FormEvent( "java.awt.event.WindowListener", "windowClosed", "thisWindowClosed", true ) )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labAnimal"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/example/pexeso/img/animals/0.jpg" )
+				"horizontalAlignment": 2
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "priKliknutiNaObrazekVyberu", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 65
+				"y": 140
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labFruit"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/example/pexeso/img/fruits/0.jpg" )
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "priKliknutiNaObrazekVyberu", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 155
+				"y": 140
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labInstrukce"
+				"text": "Zvol si motiv pexesa"
+				"horizontalAlignment": 0
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 7, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 60
+				"y": 80
+				"width": 240
+				"height": 50
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnReset"
+				"text": "Reset"
+				"enabled": false
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "priStiskuBtnReset", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 5
+				"y": 5
+				"width": 55
+				"height": 35
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labVecernicek"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/example/pexeso/img/vecernicek/0.jpg" )
+				"horizontalAlignment": 2
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "priKliknutiNaObrazekVyberu", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 70
+				"height": 70
+				"x": 245
+				"y": 140
+			} )
+			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
+				name: "menuBar1"
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "menu1"
+					"text": "Menu"
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "mItemNovaHra"
+						"text": "Nová hra"
+						"enabled": false
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "priStiskuBtnNovaHra", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "mItemKonec"
+						"text": "Konec"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "priStiskuBtnKonec", true ) )
+					} )
+				} )
+			}
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 385, 400 )
+		} )
+	}
+}
