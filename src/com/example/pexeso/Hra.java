@@ -88,7 +88,7 @@ public class Hra {
                                     otocene.clear();
                                 }
                             );
-                            obracecKarticek.setInitialDelay(1000);
+                            obracecKarticek.setInitialDelay(1500);
                             obracecKarticek.setRepeats(false);
                             obracecKarticek.start();
 
