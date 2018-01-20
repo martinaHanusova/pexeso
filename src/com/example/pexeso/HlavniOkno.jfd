@@ -39,15 +39,6 @@ new FormModel {
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 1 1 3 1,alignx center,growx 0"
 			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "btnReset"
-				"text": "Reset"
-				"enabled": false
-				"visible": false
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "priStiskuBtnReset", true ) )
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 0 0"
-			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "labVecernicek"
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/example/pexeso/img/vecernicek/0.jpg" )
@@ -85,7 +76,6 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "lab2"
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/example/pexeso/img/2.jpg" )
-				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "priKliknuti", true ) )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 1 5"
 			} )
@@ -143,6 +133,13 @@ new FormModel {
 						"text": "Konec"
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "priStiskuBtnKonec", true ) )
 					} )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnReset"
+					"text": "Reset"
+					"focusable": false
+					"enabled": false
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "priStiskuBtnReset", true ) )
 				} )
 			}
 		}, new FormLayoutConstraints( null ) {

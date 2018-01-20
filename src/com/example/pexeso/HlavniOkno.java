@@ -13,10 +13,10 @@ public class HlavniOkno extends JFrame {
     JMenu menu1;
     JMenuItem mItemNovaHra;
     JMenuItem mItemKonec;
+    JButton btnReset;
     JLabel labZelenina;
     JLabel labOvoce;
     JLabel labMotiv;
-    JButton btnReset;
     JLabel labVecernicek;
     JRadioButton rBtnZelenina;
     JRadioButton rBtnOvoce;
@@ -35,17 +35,14 @@ public class HlavniOkno extends JFrame {
 
     public HlavniOkno() {
         initComponents();
-        
+
     }
 
     private void priStiskuBtnNovaHra(ActionEvent e) {
         novaHra.znicHru();
-        contentPane.add(labZelenina);
-        contentPane.add(labOvoce);
-        contentPane.add(labVecernicek);
-        contentPane.add(labMotiv);
         mItemNovaHra.setEnabled(false);
         btnReset.setEnabled(false);
+        vytvoritVyber();
         contentPane.repaint();
         pack();
     }
@@ -64,42 +61,65 @@ public class HlavniOkno extends JFrame {
     }
 
     private void priStiskuBtnReset(ActionEvent e) {
-        novaHra.znicHru();
-        novaHra.nastavHru();
-        contentPane.repaint();
-        
+        if (novaHra != null) {
+            novaHra.znicHru();
+            novaHra.nastavHru();
+            contentPane.repaint();
+        } else {
+            return;
+        }
+
     }
 
     private void priKliknutibtnVybrat(ActionEvent e) {
-    String motiv = rBtnZelenina.isSelected() ? "zelenina" : rBtnOvoce.isSelected() ? "ovoce" : "vecernicek";
-    int pocetDvojic = rBtn2.isSelected() ? 2 : rBtn8.isSelected() ? 8 : 18;
+        String motiv = rBtnZelenina.isSelected() ? "zelenina" : rBtnOvoce.isSelected() ? "ovoce" : "vecernicek";
+        int pocetDvojic = rBtn2.isSelected() ? 2 : rBtn8.isSelected() ? 8 : 18;
+        contentPane.removeAll();
         novaHra = new Hra(contentPane, pocetDvojic, motiv);
         novaHra.nastavHru();
-        contentPane.remove(rBtnZelenina);
-        contentPane.remove(rBtnOvoce);
-        contentPane.remove(rBtnVecernicek);
-        contentPane.remove(rBtn2);
-        contentPane.remove(rBtn8);
-        contentPane.remove(rBtn18);
-        contentPane.remove(btnVybrat);
-        contentPane.remove(labZelenina);
-        contentPane.remove(labOvoce);
-        contentPane.remove(lab2);
-        contentPane.remove(lab8);
-        contentPane.remove(lab18);
-        contentPane.remove(labVecernicek);
-        contentPane.remove(labPocetDvojic);
-        contentPane.remove(labMotiv);
         mItemNovaHra.setEnabled(true);
         btnReset.setEnabled(true);
         contentPane.repaint();
         pack();
     }
+    
+    private void vytvoritVyber() {
+        contentPane.setLayout(new MigLayout(
+                "insets 0,hidemode 3,gap 5 5",
+                // columns
+                "[grow,sizegroup 2,fill]" +
+                        "[sizegroup 1,fill]" +
+                        "[sizegroup 1,fill]" +
+                        "[sizegroup 1,fill]" +
+                        "[grow,sizegroup 2,fill]",
+                // rows
+                "[fill]" +
+                        "[fill]" +
+                        "[fill]" +
+                        "[]" +
+                        "[]" +
+                        "[]" +
+                        "[]" +
+                        "[]" +
+                        "[]" +
+                        "[]"));
 
-    private void priKliknuti(MouseEvent e) {
-        // TODO add your code here
+        contentPane.add(labZelenina, "cell 1 2");
+        contentPane.add(labOvoce, "cell 2 2");
+        contentPane.add(labMotiv, "cell 1 1 3 1,alignx center,growx 0");
+        contentPane.add(labVecernicek, "cell 3 2");
+        contentPane.add(rBtnZelenina, "cell 1 3,alignx center,growx 0");
+        contentPane.add(rBtnOvoce, "cell 2 3,alignx center,growx 0");
+        contentPane.add(rBtnVecernicek, "cell 3 3,alignx center,growx 0");
+        contentPane.add(labPocetDvojic, "cell 1 4 3 1");
+        contentPane.add(lab2, "cell 1 5");
+        contentPane.add(lab8, "cell 2 5");
+        contentPane.add(lab18, "cell 3 5");
+        contentPane.add(rBtn2, "cell 1 6,alignx center,growx 0");
+        contentPane.add(rBtn8, "cell 2 6,alignx center,growx 0");
+        contentPane.add(rBtn18, "cell 3 6,alignx center,growx 0");
+        contentPane.add(btnVybrat, "cell 2 8");
     }
-
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -108,10 +128,10 @@ public class HlavniOkno extends JFrame {
         menu1 = new JMenu();
         mItemNovaHra = new JMenuItem();
         mItemKonec = new JMenuItem();
+        btnReset = new JButton();
         labZelenina = new JLabel();
         labOvoce = new JLabel();
         labMotiv = new JLabel();
-        btnReset = new JButton();
         labVecernicek = new JLabel();
         rBtnZelenina = new JRadioButton();
         rBtnOvoce = new JRadioButton();
@@ -178,6 +198,13 @@ public class HlavniOkno extends JFrame {
                 menu1.add(mItemKonec);
             }
             menuBar1.add(menu1);
+
+            //---- btnReset ----
+            btnReset.setText("Reset");
+            btnReset.setFocusable(false);
+            btnReset.setEnabled(false);
+            btnReset.addActionListener(e -> priStiskuBtnReset(e));
+            menuBar1.add(btnReset);
         }
         setJMenuBar(menuBar1);
 
@@ -195,13 +222,6 @@ public class HlavniOkno extends JFrame {
         labMotiv.setHorizontalAlignment(SwingConstants.CENTER);
         labMotiv.setFont(labMotiv.getFont().deriveFont(labMotiv.getFont().getSize() + 7f));
         contentPane.add(labMotiv, "cell 1 1 3 1,alignx center,growx 0");
-
-        //---- btnReset ----
-        btnReset.setText("Reset");
-        btnReset.setEnabled(false);
-        btnReset.setVisible(false);
-        btnReset.addActionListener(e -> priStiskuBtnReset(e));
-        contentPane.add(btnReset, "cell 0 0");
 
         //---- labVecernicek ----
         labVecernicek.setIcon(new ImageIcon(getClass().getResource("/com/example/pexeso/img/vecernicek/0.jpg")));
@@ -222,12 +242,6 @@ public class HlavniOkno extends JFrame {
 
         //---- lab2 ----
         lab2.setIcon(new ImageIcon(getClass().getResource("/com/example/pexeso/img/2.jpg")));
-        lab2.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                priKliknuti(e);
-            }
-        });
         contentPane.add(lab2, "cell 1 5");
 
         //---- lab8 ----

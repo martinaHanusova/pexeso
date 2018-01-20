@@ -69,8 +69,9 @@ public class Hra {
         }
         contentPane.setLayout(new MigLayout("insets 0,hidemode 3", margin + sloupce + margin, margin + radky + margin));
 
-        // zamicha karticky
-        Collections.shuffle(karticky);
+
+        Collections.shuffle(karticky);  // zamicha karticky
+        // rozlozi karticky do tabulky
         for (int i = 0; i < pocetObrazku * 2; i++) {
             Karticka karticka = karticky.get(i);
             this.contentPane.add(karticka, "cell " + i % pocetKarticekNaRadku + " " + (i / pocetKarticekNaRadku + 1));     // urceni sloupce a radku
@@ -93,11 +94,20 @@ public class Hra {
         mericCasu.spustitMeric();
     }
 
+    /**
+     * Metoda pro otoceni nespravne dvojice zpet na rub
+     */
     private void otocitDvojici() {
         otocene.get(0).setRubKarticky();
         otocene.get(1).setRubKarticky();
         otocene.clear();
     }
+
+    /**
+     * Metoda pro otoceni karticky pri kliknuti
+     * @param e
+     * @param karticka na kterou bylo kliknuto
+     */
 
     private void priKliknutinaKarticku(MouseEvent e, Karticka karticka) {
         if (majiSeOtocitKarticky) {
@@ -168,6 +178,7 @@ public class Hra {
         }
         contentPane.remove(labelMericCasu);
         contentPane.remove(labelZprava);
+        majiSeOtocitKarticky = false;
         mericCasu = null;
         body = 0;
         otocene.clear();
