@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.Timer;
+import net.miginfocom.swing.*;
 
 public class Hra {
 
@@ -13,7 +14,6 @@ public class Hra {
     private JPanel contentPane;
     private int pocetKarticekNaRadku;
     private int pocetObrazku;
-    private int margin;
     private List<Karticka> otocene = new ArrayList<>();
     private int body;
     private String motiv;
@@ -21,32 +21,20 @@ public class Hra {
     private JLabel labelMericCasu = new JLabel();
     private List<Karticka> karticky;
     private MericCasu mericCasu;
+    private boolean majiSeOtocitKarticky = false;
 
     /**
      * Konstruktor pro tridu Hra
      * @param contentPane kontejner do ktereho bude hra umistena
-     * @param motiv pro volbu tematu pexesa
-     */
-
-    Hra(JPanel contentPane, String motiv) {
-        this(contentPane, 4, 8, 10, motiv);
-    }
-
-    /**
-     *
-     * @param contentPane kontejner do ktereho bude hra umistena
-     * @param pocetKarticekNaRadku kolik karticek bude na jednom radku
      * @param pocetObrazku pro pexeso, ktere nebude obsahovat 8 obrazku
-     * @param margin urcuje jake bude odsazeni mezi kartickami
      * @param motiv pro volbu tematu pexesa
      */
 
-    Hra(JPanel contentPane, int pocetKarticekNaRadku, int pocetObrazku, int margin, String motiv) {
+    Hra(JPanel contentPane, int pocetObrazku, String motiv) {
 
         this.contentPane = contentPane;
-        this.pocetKarticekNaRadku = pocetKarticekNaRadku;
+        this.pocetKarticekNaRadku = (int)(Math.sqrt(pocetObrazku * 2));
         this.pocetObrazku = pocetObrazku;
-        this.margin = margin;
         this.motiv = motiv;
         karticky = new ArrayList<>();
     }
@@ -56,73 +44,101 @@ public class Hra {
      */
 
     public void nastavHru() {
+        int margin = 6;
         for (int i = 0; i < pocetObrazku * 2; i++) {
-            Karticka karticka = new Karticka("/com/example/pexeso/img/" + motiv + "/" + i % pocetObrazku + ".jpg"); // vytvori novou karticku
+            Karticka karticka = new Karticka("/com/example/pexeso/img/" + motiv + "/" + i % pocetObrazku + ".jpg", motiv + "_background"); // vytvori novou karticku
             karticka.addMouseListener(new MouseAdapter() {   // prida karticce listener pro sledovani zda na ni bylo kliknuto
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    if (!karticka.isEnabled()) {
-                        return;
-                    }
-                    if (!karticka.isJeKartickaOtocena() && otocene.size() < 2) {   // pokud nejsou otocene dve karticky
-                        karticka.otocitKarticku(e);
-                        otocene.add(karticka);
-                    } else {
-                        return;
-                    }
-                    if (otocene.size() == 2) {                                                         // pokud jsou otocene prave dve karticky
-                        if (otocene.get(0).getSrcObrazku().equals(otocene.get(1).getSrcObrazku())) {   // pokud jsou otocene karticky totozne
-                            otocene.get(0).setEnabled(false);
-                            otocene.get(1).setEnabled(false);
-                            body += 1;
-                            otocene.clear();
-                            if (body == 8) {
-                                labelZprava.setVisible(true);
-                                mericCasu.zastavitMeric();
-
-                            }
-                        } else {                                                                        // pokud otocene karticky nejsou totozne
-                            obracecKarticek = new Timer(0, it -> {                                      // Timer pro automaticke otaceni karticek na rubovou stranu
-                                    otocene.get(0).setRubKarticky();
-                                    otocene.get(1).setRubKarticky();
-                                    otocene.clear();
-                                }
-                            );
-                            obracecKarticek.setInitialDelay(2000);
-                            obracecKarticek.setRepeats(false);
-                            obracecKarticek.start();
-
-                        }
-                    }
+                   priKliknutinaKarticku(e, karticka);
                 }
             });
             karticky.add(karticka);
         }
-                                                                                                            // zamicha karticky
+
+        // vytvori tabulku
+        String sloupce = "";
+        for (int i = 0; i < pocetKarticekNaRadku; i++) {
+            sloupce+="[fill]";
+        }
+        String radky = "";
+        for (int i = 0; i <= pocetKarticekNaRadku; i++) {
+            radky+="[fill]";
+        }
+        contentPane.setLayout(new MigLayout("insets 0,hidemode 3", margin + sloupce + margin, margin+ radky + margin));
+
+        // zamicha karticky
         Collections.shuffle(karticky);
         for (int i = 0; i < pocetObrazku * 2; i++) {
             Karticka karticka = karticky.get(i);
-            karticka.setLocation(30 + (karticka.getWidth() + this.margin) * (i % this.pocetKarticekNaRadku), 40 + (karticka.getHeight() + this.margin) * (i / this.pocetKarticekNaRadku));   // nastavi pozice jednotlivym kartickam
-            this.contentPane.add(karticka);
+            this.contentPane.add(karticka, "cell " + i%pocetKarticekNaRadku + " " + (i/pocetKarticekNaRadku + 1));     // urceni sloupce a radku
         }
 
         // Vytvoreni a nastaveni labelu pro zpravu o konci hry
         labelZprava.setText("KONEC HRY");
-        this.contentPane.add(labelZprava);
+        this.contentPane.add(labelZprava, "cell 0 0 " + (pocetKarticekNaRadku - 1) + " 0,alignx center,growx 0");
         labelZprava.setBounds(0, 5, 400, labelZprava.getPreferredSize().height);
         labelZprava.setHorizontalAlignment(SwingConstants.CENTER);
         labelZprava.setFont(new Font(".SF NS Text", Font.PLAIN, 18));
         labelZprava.setVisible(false);
 
-        // Vytvoreni a nastaveni labelu pro meric casu
+         //Vytvoreni a nastaveni labelu pro meric casu
         labelMericCasu.setText("00:00");
-        this.contentPane.add(labelMericCasu);
+        this.contentPane.add(labelMericCasu, "cell" + (pocetKarticekNaRadku - 1) +  " 0,alignx right,growx 0");
         labelMericCasu.setBounds(320, 10, 400, labelMericCasu.getPreferredSize().height);
         labelMericCasu.setFont(new Font(".SF NS Text", Font.PLAIN, 18));
-
-
         mericCasu = new MericCasu(labelMericCasu);
         mericCasu.spustitMeric();
+    }
+
+    private void otocitDvojici() {
+        otocene.get(0).setRubKarticky();
+        otocene.get(1).setRubKarticky();
+        otocene.clear();
+    }
+
+    private void priKliknutinaKarticku(MouseEvent e, Karticka karticka) {
+        if (majiSeOtocitKarticky) {
+            otocitDvojici();
+            majiSeOtocitKarticky = false;
+            obracecKarticek.stop();
+        }
+        if (!karticka.isEnabled()) {
+            return;
+        }
+        if (!karticka.isJeKartickaOtocena() && otocene.size() < 2) {   // pokud nejsou otocene dve karticky
+            karticka.otocitKarticku(e);
+            otocene.add(karticka);
+        } else {
+            return;
+        }
+        if (otocene.size() == 2) {                                                         // pokud jsou otocene prave dve karticky
+            if (otocene.get(0).getSrcObrazku().equals(otocene.get(1).getSrcObrazku())) {   // pokud jsou otocene karticky totozne
+
+                otocene.get(0).setEnabled(false);
+                otocene.get(1).setEnabled(false);
+                body += 1;
+                otocene.clear();
+                if (body == pocetObrazku) {
+                    labelZprava.setVisible(true);
+                    mericCasu.zastavitMeric();
+
+                }
+            } else {                                                                        // pokud otocene karticky nejsou totozne
+                majiSeOtocitKarticky = true;
+                obracecKarticek = new Timer(0, it -> {                                      // Timer pro automaticke otaceni karticek na rubovou stranu
+                    if (majiSeOtocitKarticky) {
+                        otocitDvojici();
+                        majiSeOtocitKarticky = false;
+                    }
+                }
+                );
+                obracecKarticek.setInitialDelay(2000);
+                obracecKarticek.setRepeats(false);
+                obracecKarticek.start();
+
+            }
+        }
     }
 
     /**

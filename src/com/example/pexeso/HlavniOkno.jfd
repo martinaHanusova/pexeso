@@ -3,66 +3,129 @@ JFDML JFormDesigner: "6.0.2.0.116" Java: "1.8.0_112-release" encoding: "UTF-8"
 new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
-		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class net.miginfocom.swing.MigLayout ) {
+			"$layoutConstraints": "insets 0,hidemode 3,gap 5 5"
+			"$columnConstraints": "[grow,sizegroup 2,fill][sizegroup 1,fill][sizegroup 1,fill][sizegroup 1,fill][grow,sizegroup 2,fill]"
+			"$rowConstraints": "[fill][fill][fill][][][][][][][]"
+		} ) {
 			name: "this"
 			"defaultCloseOperation": 2
 			"title": "Pexeso"
 			"$locationPolicy": 1
-			"background": new java.awt.Color( 204, 204, 204, 255 )
-			"$sizePolicy": 1
+			"background": new java.awt.Color( 255, 255, 255, 255 )
+			"iconImage": sfield com.jformdesigner.model.FormObject NULL_VALUE
 			auxiliary() {
 				"JavaCodeGenerator.postInitCode": "this.contentPane = (JPanel) this.getContentPane();\nthis.contentPane.setBackground(this.getBackground());"
 			}
 			addEvent( new FormEvent( "java.awt.event.WindowListener", "windowClosed", "thisWindowClosed", true ) )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "labAnimal"
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/example/pexeso/img/animals/0.jpg" )
+				name: "labZelenina"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/example/pexeso/img/zelenina/0.jpg" )
 				"horizontalAlignment": 2
-				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "priKliknutiNaObrazekVyberu", true ) )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 65
-				"y": 140
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 1 2"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "labFruit"
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/example/pexeso/img/fruits/0.jpg" )
-				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "priKliknutiNaObrazekVyberu", true ) )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 155
-				"y": 140
+				name: "labOvoce"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/example/pexeso/img/ovoce/0.jpg" )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 2 2"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "labInstrukce"
-				"text": "Zvol si motiv pexesa"
+				name: "labMotiv"
+				"text": "Motiv pexesa"
 				"horizontalAlignment": 0
-				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 7, false )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 60
-				"y": 80
-				"width": 240
-				"height": 50
+				"font": &SwingDerivedFont0 new com.jformdesigner.model.SwingDerivedFont( null, 0, 7, false )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 1 1 3 1,alignx center,growx 0"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnReset"
 				"text": "Reset"
 				"enabled": false
+				"visible": false
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "priStiskuBtnReset", true ) )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 5
-				"y": 5
-				"width": 55
-				"height": 35
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 0 0"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "labVecernicek"
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/example/pexeso/img/vecernicek/0.jpg" )
 				"horizontalAlignment": 2
-				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "priKliknutiNaObrazekVyberu", true ) )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 70
-				"height": 70
-				"x": 245
-				"y": 140
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 3 2"
+			} )
+			add( new FormComponent( "javax.swing.JRadioButton" ) {
+				name: "rBtnZelenina"
+				"$buttonGroup": new FormReference( "btnGrMotiv" )
+				"selected": true
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 1 3,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JRadioButton" ) {
+				name: "rBtnOvoce"
+				"$buttonGroup": new FormReference( "btnGrMotiv" )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 2 3,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JRadioButton" ) {
+				name: "rBtnVecernicek"
+				"$buttonGroup": new FormReference( "btnGrMotiv" )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 3 3,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labPocetDvojic"
+				"text": "Počet dvojic"
+				"horizontalAlignment": 0
+				"font": #SwingDerivedFont0
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 1 4 3 1"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lab2"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/example/pexeso/img/2.jpg" )
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "priKliknuti", true ) )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 1 5"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lab8"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/example/pexeso/img/8.jpg" )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 2 5"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lab18"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/example/pexeso/img/18.jpg" )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 3 5"
+			} )
+			add( new FormComponent( "javax.swing.JRadioButton" ) {
+				name: "rBtn2"
+				"$buttonGroup": new FormReference( "btnGrPocet" )
+				"selected": true
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 1 6,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JRadioButton" ) {
+				name: "rBtn8"
+				"$buttonGroup": new FormReference( "btnGrPocet" )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 2 6,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JRadioButton" ) {
+				name: "rBtn18"
+				"$buttonGroup": new FormReference( "btnGrPocet" )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 3 6,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnVybrat"
+				"text": "Vybrat"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "priKliknutibtnVybrat", true ) )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 2 8"
 			} )
 			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
 				name: "menuBar1"
@@ -84,7 +147,17 @@ new FormModel {
 			}
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 385, 400 )
+			"size": new java.awt.Dimension( 385, 490 )
+		} )
+		add( new FormNonVisual( "javax.swing.ButtonGroup" ) {
+			name: "btnGrMotiv"
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 105, 520 )
+		} )
+		add( new FormNonVisual( "javax.swing.ButtonGroup" ) {
+			name: "btnGrPocet"
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 520 )
 		} )
 	}
 }

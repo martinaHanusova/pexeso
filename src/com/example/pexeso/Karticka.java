@@ -17,10 +17,10 @@ public class Karticka extends JLabel {
      * Konstruktor pro karticku
      * @param srcObrazku cesta k obrazku pro karticku
      */
-    Karticka(String srcObrazku) {
+    Karticka(String srcObrazku, String background) {
             this.srcObrazku = srcObrazku;
             obrazek = new ImageIcon(getClass().getResource(srcObrazku));
-            rubKarticky = new ImageIcon(getClass().getResource("/com/example/pexeso/img/background.png"));
+            rubKarticky = new ImageIcon(getClass().getResource("/com/example/pexeso/img/" + background + ".jpg"));
             this.setIcon(rubKarticky);
             this.setSize(this.getPreferredSize());
             jeKartickaOtocena = false;
