@@ -120,16 +120,16 @@ public class Hra {
                     otocene.get(0).setEnabled(false);
                     otocene.get(1).setEnabled(false);
                     body += 1;
+                    if (body == pocetObrazku) {
+                        labelZprava.setVisible(true);
+                        mericCasu.zastavitMeric();
+
+                    }
                     otocene.clear();
                 });
                 zesedovacKarticek.setInitialDelay(500);
                 zesedovacKarticek.setRepeats(false);
                 zesedovacKarticek.start();
-                if (body == pocetObrazku) {
-                    labelZprava.setVisible(true);
-                    mericCasu.zastavitMeric();
-
-                }
             } else {                                                                        // pokud otocene karticky nejsou totozne
                 majiSeOtocitKarticky = true;
                 obracecKarticek = new Timer(0, it -> {                                      // Timer pro automaticke otaceni karticek na rubovou stranu
